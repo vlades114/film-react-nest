@@ -5,7 +5,6 @@ import { Film } from './entities/film.entity';
 import { Schedule } from './entities/schedule.entity';
 import {
   FilmDto,
-  FilmListItemDto,
   ScheduleItemDto,
 } from '../films/dto/films.dto';
 import {
@@ -26,9 +25,12 @@ export class RepositoryService implements FilmsRepository {
     private readonly dataSource: DataSource,
   ) {}
 
-  async getAll(): Promise<FilmListItemDto[]> {
-    const films = await this.filmRepository.find();
-    return films.map((film) => this.toFilmListItem(film));
+  async getAll(): Promise<FilmDto[]> {
+    const films = await this.filmRepository.find({
+      relations: ['schedule'],
+      order: { rating: 'ASC' },
+    });
+    return films.map((film) => this.toFilmDto(film));
   }
 
   async getById(id: string): Promise<FilmDto | null> {
@@ -101,20 +103,6 @@ export class RepositoryService implements FilmsRepository {
         );
       }
     });
-  }
-
-  private toFilmListItem(film: Film): FilmListItemDto {
-    return {
-      id: film.id,
-      rating: film.rating,
-      director: film.director,
-      tags: film.tags,
-      title: film.title,
-      about: film.about,
-      description: film.description,
-      image: film.image,
-      cover: film.cover,
-    };
   }
 
   private toFilmDto(film: Film): FilmDto {

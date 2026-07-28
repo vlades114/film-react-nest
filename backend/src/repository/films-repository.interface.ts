@@ -1,8 +1,4 @@
-import {
-  FilmListItemDto,
-  FilmDto,
-  ScheduleItemDto,
-} from '../films/dto/films.dto';
+import { FilmDto, ScheduleItemDto } from '../films/dto/films.dto';
 
 export class ScheduleNotFoundError extends Error {
   constructor(scheduleId: string) {
@@ -24,7 +20,7 @@ export interface ScheduleUpdate {
 }
 
 export interface FilmsRepository {
-  getAll(): Promise<FilmListItemDto[]>;
+  getAll(): Promise<FilmDto[]>;
   getById(id: string): Promise<FilmDto | null>;
   getSchedule(filmId: string): Promise<ScheduleItemDto[] | null>;
   updateFilmSchedule(

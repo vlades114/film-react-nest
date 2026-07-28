@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { FilmListItemDto, ScheduleItemDto } from './dto/films.dto';
+import { FilmDto, ScheduleItemDto } from './dto/films.dto';
 import { FilmsRepository } from '../repository/films-repository.interface';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class FilmsService {
     private readonly filmsRepository: FilmsRepository,
   ) {}
 
-  async getAll(): Promise<FilmListItemDto[]> {
+  async getAll(): Promise<FilmDto[]> {
     return this.filmsRepository.getAll();
   }
 
