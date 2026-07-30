@@ -59,7 +59,7 @@ export class OrderService {
         );
       }
 
-      const existing = updates.get(ticket.session) || [...schedule.taken];
+      const existing = updates.get(ticket.session) || [];
       existing.push(seatKey);
       updates.set(ticket.session, existing);
 

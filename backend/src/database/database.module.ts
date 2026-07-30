@@ -29,7 +29,9 @@ export class DatabaseModule {
             if (mode === 'cloud') {
               const url = config.get<string>('DATABASE_URL');
               if (!url) {
-                throw new Error('DATABASE_URL is required when DATABASE_MODE=cloud');
+                throw new Error(
+                  'DATABASE_URL is required when DATABASE_MODE=cloud',
+                );
               }
 
               return {

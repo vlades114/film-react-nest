@@ -3,10 +3,7 @@ import { InjectRepository, InjectDataSource } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { Film } from './entities/film.entity';
 import { Schedule } from './entities/schedule.entity';
-import {
-  FilmDto,
-  ScheduleItemDto,
-} from '../films/dto/films.dto';
+import { FilmDto, ScheduleItemDto } from '../films/dto/films.dto';
 import {
   FilmsRepository,
   ScheduleUpdate,
@@ -88,8 +85,8 @@ export class RepositoryService implements FilmsRepository {
           throw new ScheduleNotFoundError(update.scheduleId);
         }
 
-        const requestedSet = new Set(update.taken);
-        const hasConflict = schedule.taken.some((s) => !requestedSet.has(s));
+        const alreadyTaken = new Set(schedule.taken);
+        const hasConflict = update.taken.some((s) => alreadyTaken.has(s));
         if (hasConflict) {
           throw new ScheduleConflictError(
             'Сеанс был изменён другим запросом. Попробуйте снова.',
@@ -99,7 +96,7 @@ export class RepositoryService implements FilmsRepository {
         await entityManager.update(
           Schedule,
           { id: update.scheduleId },
-          { taken: update.taken },
+          { taken: [...schedule.taken, ...update.taken] },
         );
       }
     });
