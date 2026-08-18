@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+storybook-static
+.git
+.env
+.env.*
+!.env.example
+*.log
+.idea
+.vscode
+.template
+bin
+README.md
