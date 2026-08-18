@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { FilmsController } from './films.controller';
 import { FilmsService } from './films.service';
-import { RepositoryModule } from '../repository/repository.module';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [RepositoryModule],
+  imports: [DatabaseModule.register()],
   controllers: [FilmsController],
   providers: [FilmsService],
 })

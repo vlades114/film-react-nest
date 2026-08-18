@@ -1,35 +1,5 @@
 import { IsArray, IsNumber, IsString } from 'class-validator';
 
-export class FilmListItemDto {
-  @IsString()
-  id: string;
-
-  @IsNumber()
-  rating: number;
-
-  @IsString()
-  director: string;
-
-  @IsArray()
-  @IsString({ each: true })
-  tags: string[];
-
-  @IsString()
-  title: string;
-
-  @IsString()
-  about: string;
-
-  @IsString()
-  description: string;
-
-  @IsString()
-  image: string;
-
-  @IsString()
-  cover: string;
-}
-
 export class ScheduleItemDto {
   @IsString()
   id: string;
@@ -89,7 +59,7 @@ export class FilmDto {
 
 export class FilmListResponseDto {
   total: number;
-  items: FilmListItemDto[];
+  items: FilmDto[];
 }
 
 export class ScheduleListResponseDto {

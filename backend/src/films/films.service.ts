@@ -1,17 +1,20 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { FilmListItemDto, ScheduleItemDto } from './dto/films.dto';
-import { RepositoryService } from '../repository/repository.service';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { FilmDto, ScheduleItemDto } from './dto/films.dto';
+import { FilmsRepository } from '../repository/films-repository.interface';
 
 @Injectable()
 export class FilmsService {
-  constructor(private readonly repositoryService: RepositoryService) {}
+  constructor(
+    @Inject('FILMS_REPOSITORY')
+    private readonly filmsRepository: FilmsRepository,
+  ) {}
 
-  async getAll(): Promise<FilmListItemDto[]> {
-    return this.repositoryService.getAll();
+  async getAll(): Promise<FilmDto[]> {
+    return this.filmsRepository.getAll();
   }
 
   async getSchedule(id: string): Promise<ScheduleItemDto[]> {
-    const schedule = await this.repositoryService.getSchedule(id);
+    const schedule = await this.filmsRepository.getSchedule(id);
     if (!schedule) {
       throw new NotFoundException('Film not found');
     }

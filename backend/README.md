@@ -1,73 +1,65 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Film API — backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+NestJS API для афиши фильмов и бронирования билетов (PostgreSQL + TypeORM).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Требования
 
-## Description
+- Node.js >= 18
+- PostgreSQL (локально или в Docker)
+- npm
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
+## Установка и запуск
 
 ```bash
-$ npm install
+npm ci
 ```
 
-## Running the app
+Создать `.env` из `.env.example`:
+
+Заполнить параметры подключения к PostgreSQL:
+
+| Переменная | Описание | Пример |
+|---|---|---|
+| `DATABASE_DRIVER` | Тип драйвера (всегда `postgres`) | `postgres` |
+| `DATABASE_URL` | Адрес подключения | `postgres://localhost:5432/films` |
+| `DATABASE_USERNAME` | Пользователь БД | `postgres` |
+| `DATABASE_PASSWORD` | Пароль | — |
+| `PORT` | Порт сервера | `3000` |
+| `CORS_ORIGIN` | Разрешённый источник CORS | `*` |
+
+PostgreSQL должна быть установлена и запущена.
+
+Запустить:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run start:debug
 ```
 
-## Test
+Сервер будет доступен на `http://localhost:3000/api/afisha`.
 
-```bash
-# unit tests
-$ npm run test
+## Команды
 
-# e2e tests
-$ npm run test:e2e
+| Команда | Описание |
+|---|---|
+| `npm run start:debug` | Dev-сервер (watch + debug) |
+| `npm run lint` | ESLint + Prettier |
 
-# test coverage
-$ npm run test:cov
+## Структура
+
+```
+src/
+├── films/          # Контроллер и сервис для /films
+├── order/          # Контроллер и сервис для /order
+└── repository/     # Entities, FilmsRepository (интерфейс), RepositoryService (TypeORM)
+    ├── entities/
+    │   ├── film.entity.ts
+    │   └── schedule.entity.ts
+    ├── films-repository.interface.ts
+    └── repository.service.ts
 ```
 
-## Support
+## API
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Спецификация OpenAPI — `film.yml` в корне проекта.
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Postman-коллекция — `film.postman.json` в корне проекта.

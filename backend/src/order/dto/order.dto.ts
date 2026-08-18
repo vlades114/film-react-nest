@@ -1,34 +1,48 @@
-import { IsArray, IsNumber, IsString, ValidateNested } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsInt,
+  IsNumber,
+  IsString,
+  IsUUID,
+  Min,
+  ArrayMinSize,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class TicketDto {
-  @IsString()
+  @IsUUID()
   film: string;
 
-  @IsString()
+  @IsUUID()
   session: string;
 
   @IsString()
   daytime: string;
 
-  @IsNumber()
+  @IsInt()
+  @Min(1)
   row: number;
 
-  @IsNumber()
+  @IsInt()
+  @Min(1)
   seat: number;
 
   @IsNumber()
+  @Min(0)
   price: number;
 }
 
 export class CreateOrderRequestDto {
-  @IsString()
+  @IsEmail()
   email: string;
 
   @IsString()
   phone: string;
 
   @IsArray()
+  @ArrayMinSize(1)
   @ValidateNested({ each: true })
   @Type(() => TicketDto)
   tickets: TicketDto[];
