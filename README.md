@@ -1,5 +1,9 @@
 # FILM!
 
+## Деплой
+
+Приложение доступно по адресу: http://vlades114.nomorepartiessite.ru/
+
 ## Установка
 
 ### PostgreSQL
